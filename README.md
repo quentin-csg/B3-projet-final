@@ -1,12 +1,38 @@
-## Projet finale B3
+# Détection de Deepfake – Projet Final B3
 
-Notre projet B3 va porter sur la création d'un script qui analysera une vidéo pour savoir si c'est un deepfake ou non en se basant sur plusieurs critères.
+Ce projet vise à détecter si une vidéo est un deepfake en analysant plusieurs critères audio et vidéo à l'aide de scripts python.
 
-Le script principal "jsp.py" va exécuter 4 autres scripts pour avoir un retour globale et déterminer sur la vidéo est considéré comme un deepfake ou non.
+### Scripts utilisés
 
-- f0_interpretor.py : jsp ce qu'il faut
-- missing_harmony.py : jsp nn plus
-- clignement_oeil.py : va détecter les clignements des yeux d'une personne sur la vidéo
-- sync_levres_voix : analyse les mouvement des lèvres avec la piste audio et calcul la différence entre les deux
+- **f0_interpretor.py** : Analyse la fréquence fondamentale de la voix (F0) pour détecter des anomalies caractéristiques des deepfakes (sauts, stabilité anormale, etc).
+- **missing_harmony.py** : Analyse le spectre audio pour repérer des pertes d'harmoniques dans la bande 4–6 kHz, souvent présentes dans les deepfakes.
+- **clignement_oeil.py** : Détecte les clignements des yeux sur la vidéo pour vérifier la naturalité du comportement facial.
+- **sync_levres_voix.py** : Analyse la synchronisation entre les mouvements des lèvres et la piste audio pour repérer des désynchronisations suspectes.
 
-Le script va donc retourner un tableau finale avec ces quatres paramètres pris en compte pour déterminer si la vidéo analysé est un deepfake.
+## Installation
+
+A REMPLIR
+
+## Utilisation
+
+Placez vos vidéos dans le dossier `video/` puis lancez un des scripts comme ceci :
+```sh
+python f0_interpretor.py video/nom_de_la_video.mp4
+```
+
+L'analyse sera visiblement dans votre terminal, et pour les 2 scripts d'analyse audio `f0_interpretor.py` et `missing_harmony.py`, un graphique sera également généré au format png.
+
+## Exemple de résultat
+
+```
+Fichier analysé : ./video/fake_greta.mp4
+Oui, l'amplitude est descendue sous -80 dB dans la bande 4–6 kHz (après 1s).
+❌ FAKE ❌
+Plages temporelles (après 1s) où la condition est vérifiée :
+  - De 46.50s à 46.52s : valeurs min = [-80.86 dB]
+  - De 46.56s à 46.60s : valeurs min = [-89.48 dB, -88.75 dB]
+```
+
+## Auteurs
+- Axel BROQUAIRE
+- Quentin CASSAIGNE
