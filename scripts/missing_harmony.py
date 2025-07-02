@@ -48,7 +48,7 @@ def spectrogram_and_check_threshold(mp4_path, output_png, threshold_db=-80, min_
 
     print(f"\nFichier analysé : {mp4_path}")
     if np.any(below_threshold):
-        print(f"Oui, l'amplitude est descendue sous {threshold_db} dB dans la bande 4–6 kHz (après 1s).\n❌ FAKE ❌")
+        print(f"Oui, l'amplitude est descendue sous {threshold_db} dB dans la bande 4–6 kHz (après 1s).\n FAKE")
         intervals = []
         values = []
         start = None
@@ -74,7 +74,7 @@ def spectrogram_and_check_threshold(mp4_path, output_png, threshold_db=-80, min_
             val_str = ", ".join("{:.2f} dB".format(v) for v in val_list)
             print(f"  - De {start:.2f}s à {end:.2f}s : valeurs min = [{val_str}]")
     else:
-        print(f"Non, l'amplitude n'est jamais descendue sous {threshold_db} dB dans la bande 4–6 kHz (après 1s).\n✅ REAL ✅")
+        print(f"Non, l'amplitude n'est jamais descendue sous {threshold_db} dB dans la bande 4–6 kHz (après 1s).\n REAL")
 
     plt.figure(figsize=(12, 5))
     plt.pcolormesh(t, f_band, Sxx_band, shading='auto', cmap='magma')
