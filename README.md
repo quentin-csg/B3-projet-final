@@ -17,7 +17,7 @@ git clone https://github.com/quentin-csg/B3-projet-final.git
 
 ## Utilisation
 
-Placez vos vidéos dans le dossier `video/` puis lancez l'un des scripts comme ceci :
+Placez vos vidéos dans le dossier `videos/` puis lancez l'un des scripts comme ceci :
 ```sh
 python .\scripts\nom_du_script.py .\videos\nom_de_la_video.mp4
 ```
