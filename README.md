@@ -1,6 +1,6 @@
 # Détection de Deepfake – Projet Final B3
 
-Ce projet vise à détecter si une vidéo est un deepfake en analysant plusieurs critères audio et vidéo à l'aide de scripts python.
+Ce projet vise à détecter si une vidéo est un deepfake en analysant plusieurs critères audio et vidéo à l'aide de scripts Python.
 
 ### Scripts utilisés
 
@@ -11,13 +11,15 @@ Ce projet vise à détecter si une vidéo est un deepfake en analysant plusieurs
 
 ## Installation
 
-A REMPLIR
+```
+git clone https://github.com/quentin-csg/B3-projet-final.git
+```
 
 ## Utilisation
 
-Placez vos vidéos dans le dossier `video/` puis lancez un des scripts comme ceci :
+Placez vos vidéos dans le dossier `video/` puis lancez l'un des scripts comme ceci :
 ```sh
-python f0_interpretor.py video/nom_de_la_video.mp4
+python .\scripts\nom_du_script.py .\videos\nom_de_la_video.mp4
 ```
 
 L'analyse sera visiblement dans votre terminal, et pour les 2 scripts d'analyse audio `f0_interpretor.py` et `missing_harmony.py`, un graphique sera également généré au format png.
@@ -27,7 +29,7 @@ L'analyse sera visiblement dans votre terminal, et pour les 2 scripts d'analyse 
 ```
 Fichier analysé : ./video/fake_greta.mp4
 Oui, l'amplitude est descendue sous -80 dB dans la bande 4–6 kHz (après 1s).
-❌ FAKE ❌
+FAKE
 Plages temporelles (après 1s) où la condition est vérifiée :
   - De 46.50s à 46.52s : valeurs min = [-80.86 dB]
   - De 46.56s à 46.60s : valeurs min = [-89.48 dB, -88.75 dB]
