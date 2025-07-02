@@ -9,7 +9,7 @@ from scipy.signal import correlate
 
 PREDICTEUR_POINTS = "../shape_predictor_68_face_landmarks.dat"
 INDICE_BOUCHE = slice(48, 68)  # indices de la bouche  
-DECALAGE_MAX_SEC = 1.0      # recherche de décalage dans ±1s
+DECALAGE_MAX_SEC = 1.0      # max décalage possible
 SEUIL_DECALAGE_SEC = 0.2    # seuil d’alerte en secondes
 
 
@@ -81,13 +81,13 @@ def extraire_rms_audio(chemin_video, fichier_temporaire="tmp.wav", hop_len=512):
     ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     y, sr = librosa.load(fichier_temporaire, sr=None)
-    rms = librosa.feature.rms(y=y, frame_length=hop_len*2, hop_length=hop_len)[0]
-    instants_audio = librosa.frames_to_time(np.arange(len(rms)), sr=sr, hop_length=hop_len, n_fft=hop_len*2)
+    rms = librosa.feature.rms(y=y, frame_length=hop_len*2, hop_length=hop_len)[0]  # Calcul du Root‑Mean‑Square
+    instants_audio = librosa.frames_to_time(np.arange(len(rms)), sr=sr, hop_length=hop_len, n_fft=hop_len*2)  # liste timestamps pour chaque valeur RMS
     return np.array(instants_audio), rms
 
 
 def calculer_decalage(video_t, video_v, audio_t, audio_v):
-    # Intervalle commun
+    # Intervalle de temps commun
     debut = max(video_t[0], audio_t[0])
     fin = min(video_t[-1], audio_t[-1])
 
@@ -95,7 +95,7 @@ def calculer_decalage(video_t, video_v, audio_t, audio_v):
     pas = np.median(np.diff(video_t))
     temps_commun = np.arange(debut, fin, pas)
 
-    # Interpolation sur la grille
+    # Avoir même longeur de temps
     v_vid = np.interp(temps_commun, video_t, video_v)
     v_aud = np.interp(temps_commun, audio_t, audio_v)
 
@@ -103,7 +103,7 @@ def calculer_decalage(video_t, video_v, audio_t, audio_v):
     v_vid -= v_vid.mean()
     v_aud -= v_aud.mean()
 
-    # Corrélation croisée
+    # Corrélation pour la détection d'un décalage
     corr = correlate(v_vid, v_aud, mode='full')
     milieu = len(corr) // 2
     decalage_max = int(DECALAGE_MAX_SEC / pas)
