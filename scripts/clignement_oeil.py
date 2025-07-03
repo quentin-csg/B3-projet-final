@@ -11,7 +11,7 @@ TAUX_CLIGNEMENTS_NORMAL = (8, 28)  # clignements/min
 detecteur_visage = dlib.get_frontal_face_detector()
 predicteur_points = dlib.shape_predictor("../shape_predictor_68_face_landmarks.dat")
 
-def rapport_aspect_oeil(points_oeil):
+def eye_aspect_ratio(points_oeil):
     # Calcul de la EAR (Eye Aspect Ratio)
     A = np.linalg.norm(points_oeil[1] - points_oeil[5])
     B = np.linalg.norm(points_oeil[2] - points_oeil[4])
@@ -44,8 +44,8 @@ while True:
         oeil_droit = tableau_coords[36:42]  # indice oeil droit
         oeil_gauche = tableau_coords[42:48] # indice oeil gauche
 
-        ear_left = rapport_aspect_oeil(oeil_gauche)
-        ear_right = rapport_aspect_oeil(oeil_droit)
+        ear_left = eye_aspect_ratio(oeil_gauche)
+        ear_right = eye_aspect_ratio(oeil_droit)
         ear_moyen = (ear_left + ear_right) / 2
 
         if ear_moyen < SEUIL_OUVERTURE_OEIL:
